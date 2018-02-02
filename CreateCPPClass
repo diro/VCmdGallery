@@ -1,0 +1,34 @@
+using EnvDTE;
+using EnvDTE80;
+using System;
+using System.Windows.Forms;
+
+public class CreateCPPClass : VisualCommanderExt.ICommand
+{
+	public void Run(EnvDTE80.DTE2 dte, Microsoft.VisualStudio.Shell.Package package) 
+	{
+		try  
+		{  
+
+
+	       	ProjectItem projItem = dte.ActiveDocument.ProjectItem;  
+	    	TextSelection sel = (TextSelection)projItem.Document.Selection;  
+		CodeModel cm = projItem.ContainingProject.CodeModel;  
+
+	        // Initialize the base classes array and the implemented   
+	        // interfaces array.  
+	        object[] bases = {};  
+	        object[] interfaces = {  
+	        };  
+
+        // Create a new class.  
+
+        cm.AddClass(sel.Text, projItem.Name, -1, bases,   
+            interfaces, vsCMAccess.vsCMAccessPublic);  
+    }  
+    catch (Exception ex)  
+    {  
+        MessageBox.Show(ex.Message);  
+    }  
+	}
+}
